@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<body>
+<center>
+<div id="inputs"> 
+	<h1>Sof2 .ent instances calculator </h1>
+	<p> 
+<div style="position:relative;width:200px;height:25px;border:0;padding:0;margin:0;">
+  <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+          onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+    <option></option>
+    <option id="colombia/npc_jump1">colombia/npc_jump1</option>
+    <option id="generic/pickup_crate_armor">generic/pickup_crate_armor</option>
+    <option id="generic/fence01">generic/fence01</option>
+    <option id="test/bridge">test/bridge</option>
+  </select>
+  <input type="text" name="displayValue" id="displayValue" 
+         placeholder="add / select a model" onfocus="this.select()"
+         style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;"  >
+  <input name="idValue" id="idValue" type="hidden">
+</div>
+
+	 <br> <br>
+
+	origin
+		x: <input type="number" style="width: 60px" id="originx"> 
+ 	    y: <input type="number" style="width: 60px" id="originy"> 
+ 	    z: <input type="number" style="width: 60px" id="originz"> <br> <br>
+
+	angles  
+		x:<input type="number" style="width: 40px" id="anglex"> 
+ 	    y: <input type="number" style="width: 40px" id="angley"> 
+        z: <input type="number" style="width: 40px" id="anglez"> <br> <br>
+
+	Quantity: <input type="number" style="width: 40px" id="quantity">
+ 	Amount: <input type="number" style="width: 60px" id="amount"> 
+    Direction: <select id="direction">
+  		<option value=x>x</option>
+  		<option value=y>y</option>
+  		<option value=z>z</option> </select> <br> <br>
+
+  		<input type="submit" value="Submit" onclick="calc();">
+  	</p>
+</div> <br>
+
+<p id="output">
+</p>
+<script>
+
+	document.getElementById('originx').value = '0';
+	document.getElementById('originy').value = '0';
+	document.getElementById('originz').value = '0';
+
+	document.getElementById('anglex').value = '0';
+	document.getElementById('angley').value = '0';
+	document.getElementById('anglez').value = '0';
+
+	document.getElementById('quantity').value = '1';
+	document.getElementById('amount').value = '100';
+
+
+
+	function calc() {
+		
+		var instance = document.getElementById("idValue").value || document.getElementById("displayValue").value;
+		var d = document.getElementById("direction").value;
+		var a = parseInt(document.getElementById("amount").value);
+		var q = parseInt(document.getElementById("quantity").value);
+		var ox = parseInt(document.getElementById("originx").value);
+		var oy = parseInt(document.getElementById("originy").value);
+		var oz = parseInt(document.getElementById("originz").value);
+		var ax = parseInt(document.getElementById("anglex").value);
+		var ay = parseInt(document.getElementById("angley").value);
+		var az = parseInt(document.getElementById("anglez").value);
+
+		var jx = ox;
+		var jy = oy;
+		var jz = oz;
+
+
+
+
+
+		if (d == "x") {
+			for (var i = 1; i <= q; i ++) {
+				jx += a;
+				document.write("{<br>\"classname\" \"misc_bsp\"<br>\"bspmodel\" \"instances/" + instance + "\"<br>\"origin\" \"" + jx + " " + oy + " " + oz + "\"<br>\"angles\" \"" + ax + " " + ay + " " + az + "\"<br>}<br>");
+			}
+		}
+		else if (d == "y") {
+			for (var i = 1; i <= q; i ++) {
+				jy += a;
+				document.write("{<br>\"classname\" \"misc_bsp\"<br>\"bspmodel\" \"instances/" + instance + "\"<br>\"origin\" \"" + ox + " " + jy + " " + oz + "\"<br>\"angles\" \"" + ax + " " + ay + " " + az + "\"<br>}<br>");
+			}
+		}
+		else {
+			for (var i = 1; i <= q; i ++) {
+				jz += a;
+				document.write("{<br>\"classname\" \"misc_bsp\"<br>\"bspmodel\" \"instances/" + instance + "\"<br>\"origin\" \"" + ox + " " + oy + " " + jz + "\"<br>\"angles\" \"" + ax + " " + ay + " " + az + "\"<br>}<br>");
+			}
+		}
+}
+
+</script>
+
+</body>
+</html>
