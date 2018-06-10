@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<center>
+<div id="inputs"> 
+	<h1>Sof2 .ent instances calculator </h1>
+	<p> 
+<div style="position:relative;width:200px;height:25px;border:0;padding:0;margin:0;">
+  <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+          onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+
+    <option></option>
+    <option id="spawn">spawn point</option>
+    <option id="colombia/npc_jump1">colombia/npc_jump1</option>
+    <option id="generic/pickup_crate_armor">generic/pickup_crate_armor</option>
+    <option id="generic/fence01">generic/fence01</option>
+    <option id="test/bridge">test/bridge</option>
+  </select>
+  <input type="text" name="displayValue" id="displayValue" 
+         placeholder="add / select a model" onfocus="this.select()"
+         style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;"  >
+  <input name="idValue" id="idValue" type="hidden">
+</div>
+
+	 <br> <br>
+
+	origin from ~
+		x1: <input type="number" style="width: 60px" id="x1">
+ 	    y1: <input type="number" style="width: 60px" id="y1"> <br><br>
+ 	origin to ~
+ 	    x2: <input type="number" style="width: 60px" id="x2"> 
+ 	    y2: <input type="number" style="width: 60px" id="y2"> <br><br>
+ 	height ~
+ 	    z: <input type="number" style="width: 60px" id="z"> <br> <br>
+
+	angles ~
+		x:<input type="number" style="width: 40px" id="anglex"> 
+ 	    y: <input type="number" style="width: 40px" id="angley"> 
+        z: <input type="number" style="width: 40px" id="anglez"> <br> <br>
+
+    offsetX: <input type="number" style="width: 40px" id="offsetX">
+    offsetY: <input type="number" style="width: 40px" id="offsetY"> <br><br>
+
+  		<input type="submit" value="Submit" onclick="calc();">
+  	</p>
+</div> <br>
+
+<p id="output">
+</p>
+
+<script>
+
+	document.getElementById('x1').value = '0';
+	document.getElementById('y1').value = '0';
+	document.getElementById('x2').value = '1000';
+	document.getElementById('y2').value = '1000';
+	document.getElementById('z').value = '0';
+	document.getElementById('anglex').value = '0';
+	document.getElementById('angley').value = '0';
+	document.getElementById('anglez').value = '0';
+	document.getElementById('offsetX').value = '100';
+	document.getElementById('offsetY').value = '100';
+
+
+function calc() {
+
+	var instance = document.getElementById("idValue").value || document.getElementById("displayValue").value;
+	var x1 = parseInt(document.getElementById("x1").value);
+	var y1 = parseInt(document.getElementById("y1").value);
+	var x2 = parseInt(document.getElementById("x2").value);
+	var y2 = parseInt(document.getElementById("y2").value);
+	var z = parseInt(document.getElementById("z").value);
+	var ax = parseInt(document.getElementById("anglex").value);
+	var ay = parseInt(document.getElementById("angley").value);
+	var az = parseInt(document.getElementById("anglez").value);
+
+	function isLeft(x1, x2) {
+		if (x1 < x2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	function isAbove(y1, y2) {
+		if (y1 > y2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	var offsetX = parseInt(document.getElementById('offsetX').value);
+	var offsetY = parseInt(document.getElementById('offsetY').value);
+
+	if (isLeft(x1, x2) == true && isAbove(y1, y2) == true) {
+		var x3 = x2; var y3 = y1;
+		var x4 = x1; var y4 = y2;
+		for (var i = x1; i <= x3; i += offsetX) {
+			for (var j = y1; j <= y3; j += offsetY) {
+				document.write("\"origin\" \"" + i + " " + j + " " + z + "\"");
+			}
+		}
+	}
+	else if (isLeft(x1, x2) == true && isAbove(y1, y2) == false) {
+		var x3 = x1; var y3 = y2;
+		var x4 = x2; var y4 = y1;
+		for (var i = x3; i <= x2; i += offsetX) {
+			for (var j = y3; j <= y1; j += offsetY) {
+				document.write("\"origin\" \"" + i + " " + j + " " + z + "\"");
+			}
+		}
+	}
+	else if (isLeft(x1, x2) == false && isAbove(y1, y2) == true) {
+		var x3 = x2; var y3 = y1;
+		var x4 = x1; var y4 = y2;
+		for (var i = x3; i <= x1; i += offsetX) {
+			for (var j = y3; j <= y2; j += offsetY) {
+				document.write("\"origin\" \"" + i + " " + j + " " + z + "\"");
+			}
+		}
+	}
+	else {
+		var x3 = x1; var y3 = y2;
+		var x4 = x2; var y4 = y1;
+		for (var i = x2; i <= x3; i += offsetX) {
+			for (var j = y2; j <= y4; j += offsetY) {
+				document.write("\"origin\" \"" + i + " " + j + " " + z + "\"");
+			}
+		}
+	}
+}
+
+
+
+</script>
+<p id="output"> 
+</p>
+</body>
+</html> 
