@@ -1,10 +1,80 @@
 <!DOCTYPE html>
 <html>
-<body>
-<center>
+<style>
+body {
+    background-color: #669999
+;
+}
+
+	h1 {
+   font-family: courier;
+    background-color: #3d5c5c;
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: outline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+ }
+
+ div.heading1 {
+    position: relative;
+    left: 30px;
+    top: 10px;
+    color: white;
+}
+
+ .button {
+    background-color: #00cc00;
+    border: none;
+    color: white;
+    padding: 5px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+
+</style>
+<head><title>Snatch's Map Tool</title></head>
+<body style="text-align:center;">
 <div id="inputs"> 
-	<h1>Sof2 .ent instances calculator </h1>
+	<h1 class="heading1">Snatch's .ent code Generator</h1>
 	<p> 
+		<center>
 <div style="position:relative;width:200px;height:25px;border:0;padding:0;margin:0;">
   <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
           onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
@@ -19,33 +89,42 @@
          style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;"  >
   <input name="idValue" id="idValue" type="hidden">
 </div>
+</center>
 
 	 <br> <br>
-
-	origin
+	<div class="tooltip">
+	Origin <span class="tooltiptext">In-game origin</span></div>
 		x: <input type="number" style="width: 60px" id="originx"> 
  	    y: <input type="number" style="width: 60px" id="originy"> 
  	    z: <input type="number" style="width: 60px" id="originz"> <br> <br>
 
-	angles  
+	<div class="tooltip">
+	Angles  <span class="tooltiptext">The model angles</span></div>
 		x:<input type="number" style="width: 40px" id="anglex"> 
  	    y: <input type="number" style="width: 40px" id="angley"> 
         z: <input type="number" style="width: 40px" id="anglez"> <br> <br>
 
-	Quantity: <input type="number" style="width: 40px" id="quantity">
- 	Amount: <input type="number" style="width: 60px" id="amount"> 
-    Direction: <select id="direction">
+	<div class="tooltip">
+	Quantity: <span class="tooltiptext">How many models do you want to generate?</span></div> <input type="number" style="width: 40px" id="quantity">
+	<div class="tooltip">
+ 	Distance: <input type="number" style="width: 60px" id="amount">  <span class="tooltiptext">The distance between in each model</span></div>
+ 	<div class="tooltip">
+    Direction: <span class="tooltiptext">On which axis to add the distance?</span></div><select id="direction">
   		<option value=x>x</option>
   		<option value=y>y</option>
   		<option value=z>z</option> </select> <br> <br>
 
-  		<input type="submit" value="Submit" onclick="calc();">
+  		<input type="button" class="button" value="Generate" onclick="calc();">
   	</p>
 </div> <br>
+<textarea rows="20" cols="50" id="output"> </textarea>
 
-<p id="output">
-</p>
+
 <script>
+
+	function selectText() {
+		document.getElementById('output').innerHTML.select()
+	}
 
 	document.getElementById('originx').value = '0';
 	document.getElementById('originy').value = '0';
@@ -57,8 +136,6 @@
 
 	document.getElementById('quantity').value = '1';
 	document.getElementById('amount').value = '100';
-
-
 
 	function calc() {
 		
@@ -84,24 +161,26 @@
 		if (d == "x") {
 			for (var i = 1; i <= q; i ++) {
 				jx += a;
-				document.write("{<br>\"classname\" \"misc_bsp\"<br>\"bspmodel\" \"instances/" + instance + "\"<br>\"origin\" \"" + jx + " " + oy + " " + oz + "\"<br>\"angles\" \"" + ax + " " + ay + " " + az + "\"<br>}<br>");
+				document.getElementById("output").innerHTML +=("&#13;&#10{&#13;&#10\"classname\" \"misc_bsp\"&#13;&#10\"bspmodel\" \"instances/" + instance + "\"&#13;&#10\"origin\" \"" + jx + " " + oy + " " + oz + "\"&#13;&#10\"angles\" \"" + ax + " " + ay + " " + az + "\"&#13;&#10}&#13;&#10");
 			}
 		}
 		else if (d == "y") {
 			for (var i = 1; i <= q; i ++) {
 				jy += a;
-				document.write("{<br>\"classname\" \"misc_bsp\"<br>\"bspmodel\" \"instances/" + instance + "\"<br>\"origin\" \"" + ox + " " + jy + " " + oz + "\"<br>\"angles\" \"" + ax + " " + ay + " " + az + "\"<br>}<br>");
+				document.getElementById("output").innerHTML += ("&#13;&#10{&#13;&#10\"classname\" \"misc_bsp\"&#13;&#10\"bspmodel\" \"instances/" + instance + "\"&#13;&#10\"origin\" \"" + ox + " " + jy + " " + oz + "\"&#13;&#10\"angles\" \"" + ax + " " + ay + " " + az + "\"&#13;&#10}&#13;&#10");
 			}
 		}
 		else {
 			for (var i = 1; i <= q; i ++) {
 				jz += a;
-				document.write("{<br>\"classname\" \"misc_bsp\"<br>\"bspmodel\" \"instances/" + instance + "\"<br>\"origin\" \"" + ox + " " + oy + " " + jz + "\"<br>\"angles\" \"" + ax + " " + ay + " " + az + "\"<br>}<br>");
+				document.getElementById("output").innerHTML += ("&#13;&#10{&#13;&#10\"classname\" \"misc_bsp\"&#13;&#10\"bspmodel\" \"instances/" + instance + "\"&#13;&#10\"origin\" \"" + ox + " " + oy + " " + jz + "\"&#13;&#10\"angles\" \"" + ax + " " + ay + " " + az + "\"&#13;&#10}&#13;&#10");
 			}
 		}
 }
 
+
 </script>
+
 
 </body>
 </html>
