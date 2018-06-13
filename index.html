@@ -1,8 +1,326 @@
 <!DOCTYPE html>
 <html>
+<title>Snatch's place</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: "Roboto", sans-serif; background: #94b8ba;}
+.w3-bar-block .w3-bar-item{padding:16px;font-weight:bold}
+
+
+
+
+.button {
+    background-color: #00cc00;
+    border: none;
+    color: white;
+    padding: 5px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: #888888;
+    border: none;
+    color: white;
+    padding: 5px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    opacity: 0.7;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+div.al {
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  border: 3px none #cccccc;
+  margin: 10px 0px 10px 0px;
+  border: 1px solid black;
+  resize: none;
+  background: #efebe6;
+}
+.right {
+  float: right;
+  width: 50%;
+}
+</style>
+
 <body>
-<script>
-	window.location.replace('https://ym2onb2nhsdeyhrn0yu97q-on.drv.tw/Docs/');
+
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-animate-left w3-card" style="z-index:3;width:250px; background: #a5ccce" id="mySidebar">
+  <a class="w3-bar-item w3-button w3-hide-large w3-large" href="javascript:void(0)" onclick="w3_close()">Close <i class="fa fa-remove"></i></a>
+  <a class="w3-bar-item w3-button" href="index.html">Home</a>
+  <a class="w3-bar-item w3-button" href="Line.html">Line Generator</a>
+  <a class="w3-bar-item w3-button w3-teal" href="Rectangle.html">Rectangle</a>
+  </div>
+</nav>
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
+
+<div class="w3-main" style="margin-left:250px;">
+
+<div id="myTop" class="w3-container w3-top w3-theme w3-large">
+  <p><i class="fa fa-bars w3-button w3-teal w3-hide-large w3-xlarge" onclick="w3_open()"></i>
+  <span id="myIntro" class="w3-hide">Snatch's place</span></p>
+</div>
+
+
+<header class="w3-container w3-theme" style="padding:64px 32px">
+  <h1 class="w3-xxxlarge">.ent Rectangle generator!</h1>
+</header>
+
+
+
+<div class="w3-container" style="padding:32px">
+<div class="al"> <textarea rows="20" cols="50" id="output" class="right" readonly> </textarea> </div>
+<div style="position:relative;width:200px;height:25px;border:0;padding:0;margin:0;">
+  <select style="position:absolute;top:0px;left:0px;width:200px; height:25px;line-height:20px;margin:0;padding:0;"
+          onchange="document.getElementById('displayValue').value=this.options[this.selectedIndex].text; document.getElementById('idValue').value=this.options[this.selectedIndex].value;">
+    <option></option>
+    <option id="colombia/npc_jump1">colombia/npc_jump1</option>
+    <option id="generic/pickup_crate_armor">generic/pickup_crate_armor</option>
+    <option id="generic/fence01">generic/fence01</option>
+    <option id="test/bridge">test/bridge</option>
+    <option id="hongkong/sm_hkcover2">hongkong/sm_hkcover2</option>
+  </select>
+  <input type="text" name="displayValue" id="displayValue" 
+         placeholder="add / select a model" onfocus="this.select()"
+         style="position:absolute;top:0px;left:0px;width:183px;width:180px\9;#width:180px;height:23px; height:21px\9;#height:18px;border:1px solid #556;"  >
+  <input name="idValue" id="idValue" type="hidden">
+</div>
+
+   <br> <br>
+  <div class="tooltip">
+  OriginA <span class="tooltiptext">First origin</span></div>
+    x: <input type="number" style="width: 70px" id="ux1"> 
+      y: <input type="number" style="width: 70px" id="uy1"> 
+      z: <input type="number" style="width: 70px" id="uz1"> <br> <br>
+
+      <div class="tooltip">
+  OriginB <span class="tooltiptext">Second origin</span></div>
+    x: <input type="number" style="width: 70px" id="ux2"> 
+      y: <input type="number" style="width: 70px" id="uy2"> 
+      z: <input type="number" style="width: 70px" id="uz2"> <br> <br>
+
+        <div class="tooltip">
+  Angles  <span class="tooltiptext">The model angles</span></div>
+    x:<input type="number" style="width: 50px" id="anglex"> 
+      y: <input type="number" style="width: 50px" id="angley"> 
+        z: <input type="number" style="width: 50px" id="anglez"> <br> <br>
+
+	  <div class="tooltip">
+	  Offsets <span class="tooltiptext">Distance between models</span></div>
+	    x: <input type="number" style="width: 70px" id="uoffsetX"> 
+	      y: <input type="number" style="width: 70px" id="uoffsetY"> 
+	      z: <input type="number" style="width: 70px" id="uoffsetZ"> <br> <br>
+
+
+
+      <input type="button" class="button" value="Generate" onclick="calc();"> 
+      <input type="button" class="button1" value="clear" onclick="Clear();"> 
+      
+    </p>
+
+     
+</div>
+
+
+
+
+
+
+
+
+<script> 
+	// Open and close the sidebar on medium and small screens
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Change style of top container on scroll
+window.onscroll = function() {myFunction()};
+function myFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("myTop").classList.add("w3-card-4", "w3-animate-opacity");
+        document.getElementById("myIntro").classList.add("w3-show-inline-block");
+    } else {
+        document.getElementById("myIntro").classList.remove("w3-show-inline-block");
+        document.getElementById("myTop").classList.remove("w3-card-4", "w3-animate-opacity");
+    }
+}
+
+// Accordions
+function myAccordion(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme";
+    } else { 
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className = 
+        x.previousElementSibling.className.replace(" w3-theme", "");
+    }
+}
+
+function Clear() {
+  return document.getElementById('output').innerHTML = "";
+}
+
+
+	document.getElementById('ux1').value = '0';
+	document.getElementById('uy1').value = '0';
+	document.getElementById('uz1').value = '0';
+
+	document.getElementById('ux2').value = '2';
+	document.getElementById('uy2').value = '2';
+	document.getElementById('uz2').value = '2';
+
+	document.getElementById('anglex').value = '0';
+	document.getElementById('angley').value = '0';
+	document.getElementById('anglez').value = '0';
+
+	document.getElementById('uoffsetX').value = '2';
+	document.getElementById('uoffsetY').value = '2';
+	document.getElementById('uoffsetZ').value = '2';
+
+	function segLen(x1,y1,x2,y2){
+		return Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+	}
+	
+	function calc() {
+
+	var instance = document.getElementById("idValue").value || document.getElementById("displayValue").value;
+	var xa = parseInt(document.getElementById("ux1").value);
+	var ya = parseInt(document.getElementById("uy1").value);
+	var za = parseInt(document.getElementById("uz1").value);
+
+	var xb = parseInt(document.getElementById("ux2").value);
+	var yb = parseInt(document.getElementById("uy2").value);
+	var zb = parseInt(document.getElementById("uz2").value);
+
+	var ax = parseInt(document.getElementById("anglex").value);
+	var ay = parseInt(document.getElementById("angley").value);
+	var az = parseInt(document.getElementById("anglez").value);
+
+	var offsetX = parseInt(document.getElementById("uoffsetX").value);
+	var offsetY = parseInt(document.getElementById("uoffsetY").value);
+	var offsetZ = parseInt(document.getElementById("uoffsetZ").value);
+
+	if (za > zb) {
+		var z2 = za;
+		var z1 = zb;
+	}
+	else if (za < zb) {
+		var z1 = za;
+		var z2 = zb;
+	}
+	else {
+		var z1 = za;
+		var z2 = za;
+	}
+
+		if (xa <= xb && ya <= yb)  { // bottom left + top rioght
+		var x1 = xa; var y1 = yb;
+		var x2 = xb; var y2 = yb;
+		var x3 = xa; var y3 = ya;
+		var x4 = xb; var y4 = ya;
+	}
+	else if (xa > xb && ya > yb) { // top right + bottom left
+		var x1 = xb; var y1 = ya;
+		var x2 = xa; var y2 = ya;
+		var x3 = xb; var y3 = yb;
+		var x4 = xa; var y4 = yb;
+	}
+	else if (xa >= xb && ya <= yb) { // bottom right + top left
+		var x1 = xb; var y1 = yb;
+		var x2 = xa; var y2 = yb;
+		var x3 = xb; var y3 = ya;
+		var x4 = xa; var y4 = ya;
+	}
+	else { //(xa < xb && ya > yb) top left + bottom right
+		var x1 = xa; var y1 = ya;
+		var x2 = xb; var y2 = ya;
+		var x3 = xa; var y3 = yb;
+		var x4 = xb; var y4 = yb;
+	}
+
+	if (Math.sign(offsetX) == -1 || Math.sign(offsetY) == -1 || Math.sign(offsetZ) == -1) {
+		window.alert("Error! Offsets cannot be a negative number, setting absolute value.");
+		offsetX = Math.abs(offsetX);
+		offsetY = Math.abs(offsetY);
+		offsetZ = Math.abs(offsetZ);
+	}
+
+	let contX = true;
+	let contY = true;
+	let contZ = true;
+
+	for (var i = x1; i <= x2 && contX; i += offsetX) {
+		contX = offsetX !== 0;
+		 contY = true;
+	  for (var j = y3; j <= y1 && contY; j += offsetY) {
+	  		contY = offsetY !== 0;
+	  		contZ= true;
+	    for (var k = z1; k <= z2 && contZ; k += offsetZ) {
+	    		contZ = offsetZ !== 0;
+	      document.getElementById("output").innerHTML += (`{
+"classname" "misc_bsp"
+"bspmodel" "instances/${instance}"
+"origin" "${i} ${j} ${k}"
+"angles" "${ax} ${ay} ${az}"
+}
+`);
+	    }
+	  }
+	}
+}
+
 </script>
-	</body>
-</html>
+     
+</body>
+</html> 
